@@ -134,12 +134,12 @@ public class Controller : MonoBehaviour
             m_Grounded = true;
         }
 
-        Speed = 0;
+        Speed = 10;
         Vector3 move = Vector3.zero;
         if (!m_IsPaused && !LockControl)
         {
             // Jump (we do it first as 
-            if (m_Grounded && Input.GetButtonDown("Jump"))
+            /*if (m_Grounded && Input.GetButtonDown("Jump"))
             {
                 m_VerticalSpeed = JumpSpeed;
                 m_Grounded = false;
@@ -165,8 +165,8 @@ public class Controller : MonoBehaviour
             move = move * usedSpeed * Time.deltaTime;
             
             move = transform.TransformDirection(move);
-            m_CharacterController.Move(move);
-            
+            m_CharacterController.Move(move);*/
+
             // Turn player
             float turnPlayer =  Input.GetAxis("Mouse X") * MouseSensitivity;
             m_HorizontalAngle = m_HorizontalAngle + turnPlayer;
