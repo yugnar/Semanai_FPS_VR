@@ -8,37 +8,41 @@ using UnityEditor;
 /// <summary>
 /// This will check if all targets referenced are destroyed, and trigger the action when this is true
 /// </summary>
-public class TargetChecker : GameTrigger
+/// 
+namespace Photon.Pun.Demo.Asteroids
 {
-    public Target[] targetsToCheck;
-
-    void Update()
+    public class TargetChecker : GameTrigger
     {
-        bool allDone = true;
-        for(int i = 0; i < targetsToCheck.Length && allDone; ++i)
+        public Target[] targetsToCheck;
+
+        void Update()
         {
-            allDone &= targetsToCheck[i].Destroyed;
+            bool allDone = true;
+            for (int i = 0; i < targetsToCheck.Length && allDone; ++i)
+            {
+                allDone &= targetsToCheck[i].Destroyed;
+            }
+
+            if (allDone)
+            {
+                Trigger();
+                Destroy(gameObject);
+            }
         }
 
-        if (allDone)
-        {
-            Trigger();
-            Destroy(gameObject);
-        }
-    }
-    
-    
+
 #if UNITY_EDITOR
 
-    public void OnDrawGizmosSelected()
-    {
-        if (targetsToCheck == null)
-            return;
-        
-        foreach (var target in targetsToCheck)
+        public void OnDrawGizmosSelected()
         {
-            Handles.DrawDottedLine(transform.position, target.transform.position, 10);
+            if (targetsToCheck == null)
+                return;
+
+            foreach (var target in targetsToCheck)
+            {
+                Handles.DrawDottedLine(transform.position, target.transform.position, 10);
+            }
         }
-    }
 #endif
+    }
 }

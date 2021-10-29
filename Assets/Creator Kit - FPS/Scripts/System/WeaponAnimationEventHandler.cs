@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponAnimationEventHandler : MonoBehaviour
+
+namespace Photon.Pun.Demo.Asteroids
 {
-    Weapon m_Owner;
-
-    void Awake()
+    public class WeaponAnimationEventHandler : MonoBehaviour
     {
-        m_Owner = GetComponentInParent<Weapon>();
-    }
+        Weapon m_Owner;
 
-    public void PlayFootstep()
-    {
-        m_Owner.Owner.PlayFootstep();
+        void Awake()
+        {
+            m_Owner = GetComponentInParent<Weapon>();
+        }
+
+        public void PlayFootstep()
+        {
+            m_Owner.Owner.PlayFootstep();
+        }
     }
 }

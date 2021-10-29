@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RestartLevel : MonoBehaviour
+namespace Photon.Pun.Demo.Asteroids
 {
-    public void Restart()
+    public class RestartLevel : MonoBehaviour
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+        public void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
-    public void NextLevel()
-    {
-        UIAudioPlayer.PlayPositive();
-        GameSystem.Instance.NextLevel();
+        public void NextLevel()
+        {
+            UIAudioPlayer.PlayPositive();
+            GameSystem.Instance.NextLevel();
+        }
     }
 }
