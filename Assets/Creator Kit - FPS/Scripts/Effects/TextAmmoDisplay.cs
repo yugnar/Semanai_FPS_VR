@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextAmmoDisplay : AmmoDisplay
+namespace Photon.Pun.Demo.Asteroids
 {
-    public Text DisplayText;
-    
-    public override void UpdateAmount(int current, int max)
+    public class TextAmmoDisplay : AmmoDisplay
     {
-        DisplayText.text = current.ToString();
+        public Text DisplayText;
+
+        public override void UpdateAmount(int current, int max)
+        {
+            DisplayText.text = current.ToString();
+        }
     }
+
 }

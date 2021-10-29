@@ -4,48 +4,50 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-public class PauseMenu : MonoBehaviour
+namespace Photon.Pun.Demo.Asteroids
 {
-    public static PauseMenu Instance { get; private set; }
-
-    void Awake()
+    public class PauseMenu : MonoBehaviour
     {
-        Instance = this;
-        gameObject.SetActive(false);
-    }
+        public static PauseMenu Instance { get; private set; }
 
-    public void Display()
-    {
-        gameObject.SetActive(true);
-        GameSystem.Instance.StopTimer();
-        Controller.Instance.DisplayCursor(true);
-    }
+        void Awake()
+        {
+            Instance = this;
+            gameObject.SetActive(false);
+        }
 
-    public void OpenEpisode()
-    {
-        if(LevelSelectionUI.Instance.IsEmpty())
-            return;
-        
-        UIAudioPlayer.PlayPositive();
-        gameObject.SetActive(false);
-        LevelSelectionUI.Instance.DisplayEpisode();
-    }
+        public void Display()
+        {
+            gameObject.SetActive(true);
+            GameSystem.Instance.StopTimer();
+            Controller.Instance.DisplayCursor(true);
+        }
 
-    public void ReturnToGame()
-    {
-        UIAudioPlayer.PlayPositive();
-        GameSystem.Instance.StartTimer();
-        gameObject.SetActive(false);
-        Controller.Instance.DisplayCursor(false);
-    }
+        public void OpenEpisode()
+        {
+            if (LevelSelectionUI.Instance.IsEmpty())
+                return;
 
-    public void ExitGame()
-    {
+            UIAudioPlayer.PlayPositive();
+            gameObject.SetActive(false);
+            LevelSelectionUI.Instance.DisplayEpisode();
+        }
+
+        public void ReturnToGame()
+        {
+            UIAudioPlayer.PlayPositive();
+            GameSystem.Instance.StartTimer();
+            gameObject.SetActive(false);
+            Controller.Instance.DisplayCursor(false);
+        }
+
+        public void ExitGame()
+        {
 #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
+            EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
     }
 }

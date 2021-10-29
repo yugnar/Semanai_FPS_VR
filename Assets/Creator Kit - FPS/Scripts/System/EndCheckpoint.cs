@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndCheckpoint : MonoBehaviour
+namespace Photon.Pun.Demo.Asteroids
 {
-    void OnTriggerEnter(Collider other)
+    public class EndCheckpoint : MonoBehaviour
     {
-        if (other.GetComponent<Controller>() == null)
-            return;
-        
-        
-        GameSystem.Instance.StopTimer();
-        GameSystem.Instance.FinishRun();
-        Destroy(gameObject);
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<Controller>() == null)
+                return;
+
+
+            GameSystem.Instance.StopTimer();
+            GameSystem.Instance.FinishRun();
+            Destroy(gameObject);
+        }
     }
 }

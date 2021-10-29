@@ -6,50 +6,52 @@ using UnityEngine.UI;
 using UnityEditor.SceneManagement;
 #endif
 
-public class LevelSelectionUI : MonoBehaviour
+namespace Photon.Pun.Demo.Asteroids
 {
-    public static LevelSelectionUI Instance { get; private set; }
-
-    public RectTransform ButtonListPlace;
-    public Button ButtonPrefab;
-    public Button BackButton;
-    
-    List<Button> m_EpisodeButtons = new List<Button>();
-    List<List<Button>> m_LevelButtons = new List<List<Button>>();
-    
-    void Awake()
+    public class LevelSelectionUI : MonoBehaviour
     {
-        Instance = this;
-        gameObject.SetActive(false);
-    }
+        public static LevelSelectionUI Instance { get; private set; }
 
-    public void Init()
-    {
-        for (int i = 0; i < GameDatabase.Instance.episodes.Length; ++i)
+        public RectTransform ButtonListPlace;
+        public Button ButtonPrefab;
+        public Button BackButton;
+
+        List<Button> m_EpisodeButtons = new List<Button>();
+        List<List<Button>> m_LevelButtons = new List<List<Button>>();
+
+        void Awake()
         {
-            var ep = GameDatabase.Instance.episodes[i];
+            Instance = this;
+            gameObject.SetActive(false);
+        }
 
-            Button b = Instantiate(ButtonPrefab);
-            Text t = b.GetComponentInChildren<Text>();
-
-            t.text = $"Episode {i + 1}";
-
-            var i1 = i;
-            b.onClick.AddListener(() => {UIAudioPlayer.PlayPositive(); OpenEpisode(i1);});
-            b.transform.SetParent(ButtonListPlace);
-                
-            m_EpisodeButtons.Add(b);
-            
-            m_LevelButtons.Add(new List<Button>());
-
-            for (int j = 0; j < ep.scenes.Length; ++j)
+        public void Init()
+        {
+            for (int i = 0; i < GameDatabase.Instance.episodes.Length; ++i)
             {
-                Button levelB = Instantiate(ButtonPrefab);
-                t = levelB.GetComponentInChildren<Text>();
+                var ep = GameDatabase.Instance.episodes[i];
 
-                var j1 = j;
-                levelB.onClick.AddListener(() =>
+                Button b = Instantiate(ButtonPrefab);
+                Text t = b.GetComponentInChildren<Text>();
+
+                t.text = $"Episode {i + 1}";
+
+                var i1 = i;
+                b.onClick.AddListener(() => { UIAudioPlayer.PlayPositive(); OpenEpisode(i1); });
+                b.transform.SetParent(ButtonListPlace);
+
+                m_EpisodeButtons.Add(b);
+
+                m_LevelButtons.Add(new List<Button>());
+
+                for (int j = 0; j < ep.scenes.Length; ++j)
                 {
+                    Button levelB = Instantiate(ButtonPrefab);
+                    t = levelB.GetComponentInChildren<Text>();
+
+                    var j1 = j;
+                    levelB.onClick.AddListener(() =>
+                    {
 #if UNITY_EDITOR
                     EditorSceneManager.LoadSceneInPlayMode(ep.scenes[j1], new LoadSceneParameters());
 #else
@@ -57,63 +59,64 @@ public class LevelSelectionUI : MonoBehaviour
 #endif
                 });
 
-                t.text = $"Level {j + 1}";
-                
-                levelB.transform.SetParent(ButtonListPlace);
-                m_LevelButtons[i].Add(levelB);
+                    t.text = $"Level {j + 1}";
+
+                    levelB.transform.SetParent(ButtonListPlace);
+                    m_LevelButtons[i].Add(levelB);
+                }
             }
         }
-    }
 
-    public bool IsEmpty()
-    {
-        return m_EpisodeButtons.Count == 0;
-    }
-
-    void BackToPause()
-    {
-        UIAudioPlayer.PlayNegative();
-        gameObject.SetActive(false);
-        PauseMenu.Instance.Display();
-    }
-
-    void BackToEpisode()
-    {
-        DisplayEpisode();
-        UIAudioPlayer.PlayNegative();
-    }
-
-    public void DisplayEpisode()
-    {
-        BackButton.onClick.RemoveAllListeners();
-        BackButton.onClick.AddListener(BackToPause);
-        
-        gameObject.SetActive(true);
-        
-        foreach (RectTransform t in ButtonListPlace)
+        public bool IsEmpty()
         {
-            t.gameObject.SetActive(false);
+            return m_EpisodeButtons.Count == 0;
         }
 
-        foreach (var b in m_EpisodeButtons)
+        void BackToPause()
         {
-            b.gameObject.SetActive(true);
-        }
-    }
-
-    void OpenEpisode(int i)
-    {
-        BackButton.onClick.RemoveAllListeners();
-        BackButton.onClick.AddListener(BackToEpisode);
-        
-        foreach (RectTransform t in ButtonListPlace)
-        {
-            t.gameObject.SetActive(false);
+            UIAudioPlayer.PlayNegative();
+            gameObject.SetActive(false);
+            PauseMenu.Instance.Display();
         }
 
-        foreach (var b in m_LevelButtons[i])
+        void BackToEpisode()
         {
-            b.gameObject.SetActive(true);
+            DisplayEpisode();
+            UIAudioPlayer.PlayNegative();
+        }
+
+        public void DisplayEpisode()
+        {
+            BackButton.onClick.RemoveAllListeners();
+            BackButton.onClick.AddListener(BackToPause);
+
+            gameObject.SetActive(true);
+
+            foreach (RectTransform t in ButtonListPlace)
+            {
+                t.gameObject.SetActive(false);
+            }
+
+            foreach (var b in m_EpisodeButtons)
+            {
+                b.gameObject.SetActive(true);
+            }
+        }
+
+        void OpenEpisode(int i)
+        {
+            BackButton.onClick.RemoveAllListeners();
+            BackButton.onClick.AddListener(BackToEpisode);
+
+            foreach (RectTransform t in ButtonListPlace)
+            {
+                t.gameObject.SetActive(false);
+            }
+
+            foreach (var b in m_LevelButtons[i])
+            {
+                b.gameObject.SetActive(true);
+            }
         }
     }
 }

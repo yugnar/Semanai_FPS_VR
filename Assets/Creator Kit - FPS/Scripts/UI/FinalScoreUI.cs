@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FinalScoreUI : MonoBehaviour
+namespace Photon.Pun.Demo.Asteroids
 {
-    public static FinalScoreUI Instance { get; private set; }
-    
-    public Text TargetDestroyed;
-    public Text Penalty;
-    public Text TimeSpent;
-    public Text FinalTime;
-    public Text FinalScore;
-    
-    void Awake()
+    public class FinalScoreUI : MonoBehaviour
     {
-        Instance = this;
-        gameObject.SetActive(false);
-    }
+        public static FinalScoreUI Instance { get; private set; }
 
-    public void Display()
-    {
-        gameObject.SetActive(true);
-        
-        float time = GameSystem.Instance.RunTime;
-        int targetDestroyed = GameSystem.Instance.DestroyedTarget;
-        int totalTarget = GameSystem.Instance.TargetCount;
-        int missedTarget = totalTarget - targetDestroyed;
-        float penaltyAmount = GameSystem.Instance.TargetMissedPenalty * missedTarget;
-            
-        TargetDestroyed.text = targetDestroyed + "/" + totalTarget;
-        TimeSpent.text = time.ToString("N2") + "s";
-        Penalty.text = missedTarget +"*"+ GameSystem.Instance.TargetMissedPenalty.ToString("N2")+"s = "+ penaltyAmount.ToString("N2") + "s";
-        FinalTime.text = (time + penaltyAmount).ToString("N2") + "s";
+        public Text TargetDestroyed;
+        public Text Penalty;
+        public Text TimeSpent;
+        public Text FinalTime;
+        public Text FinalScore;
 
-        FinalScore.text = GameSystem.Instance.Score.ToString("N");
+        void Awake()
+        {
+            Instance = this;
+            gameObject.SetActive(false);
+        }
+
+        public void Display()
+        {
+            gameObject.SetActive(true);
+
+            float time = GameSystem.Instance.RunTime;
+            int targetDestroyed = GameSystem.Instance.DestroyedTarget;
+            int totalTarget = GameSystem.Instance.TargetCount;
+            int missedTarget = totalTarget - targetDestroyed;
+            float penaltyAmount = GameSystem.Instance.TargetMissedPenalty * missedTarget;
+
+            TargetDestroyed.text = targetDestroyed + "/" + totalTarget;
+            TimeSpent.text = time.ToString("N2") + "s";
+            Penalty.text = missedTarget + "*" + GameSystem.Instance.TargetMissedPenalty.ToString("N2") + "s = " + penaltyAmount.ToString("N2") + "s";
+            FinalTime.text = (time + penaltyAmount).ToString("N2") + "s";
+
+            FinalScore.text = GameSystem.Instance.Score.ToString("N");
+        }
     }
 }

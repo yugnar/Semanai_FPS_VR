@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+namespace Photon.Pun.Demo.Asteroids {
 public class LiquidAmmoDisplay : AmmoDisplay
 {
     public LiquidContainer Container;
@@ -12,4 +12,5 @@ public class LiquidAmmoDisplay : AmmoDisplay
     {
         Container.ChangeLiquidAmount(Mathf.Lerp(MinLiquidAmount, MaxLiquidAmount, current/(float)max));
     }
+}
 }

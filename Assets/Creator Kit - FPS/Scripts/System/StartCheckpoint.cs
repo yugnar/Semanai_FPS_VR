@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class StartCheckpoint : MonoBehaviour
+namespace Photon.Pun.Demo.Asteroids
 {
-    void OnTriggerEnter(Collider other)
+    public class StartCheckpoint : MonoBehaviour
     {
-        GameSystem.Instance.ResetTimer();
-        GameSystem.Instance.StartTimer();
-        Destroy(gameObject);
+        void OnTriggerEnter(Collider other)
+        {
+            GameSystem.Instance.ResetTimer();
+            GameSystem.Instance.StartTimer();
+            Destroy(gameObject);
+        }
     }
 }
