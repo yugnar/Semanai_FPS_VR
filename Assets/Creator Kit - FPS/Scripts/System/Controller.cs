@@ -168,7 +168,7 @@ public class Controller : MonoBehaviour
             m_CharacterController.Move(move);*/
 
             // Turn player
-            float turnPlayer =  Input.GetAxis("Mouse X") * MouseSensitivity;
+            float turnPlayer =  Input.GetAxis("Horizontal") * MouseSensitivity;
             m_HorizontalAngle = m_HorizontalAngle + turnPlayer;
 
             if (m_HorizontalAngle > 360) m_HorizontalAngle -= 360.0f;
@@ -179,7 +179,7 @@ public class Controller : MonoBehaviour
             transform.localEulerAngles = currentAngles;
 
             // Camera look up/down
-            var turnCam = -Input.GetAxis("Mouse Y");
+            var turnCam = -Input.GetAxis("Vertical");
             turnCam = turnCam * MouseSensitivity;
             m_VerticalAngle = Mathf.Clamp(turnCam + m_VerticalAngle, -89.0f, 89.0f);
             currentAngles = CameraPosition.transform.localEulerAngles;
